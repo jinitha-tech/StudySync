@@ -2,6 +2,7 @@
 import StatsGrid from '../components/StatsGrid'
 import '../dashboard.css'
 import WeeklyActivity from '../components/WeeklyActivity'
+import UpcomingDeadlines from "../components/UpcomingDeadlines";
 
 function DashboardPage() {
   return (
@@ -24,6 +25,7 @@ function DashboardPage() {
     
       <StatsGrid />
       <WeeklyActivity />
+      <UpcomingDeadlines />
     </div>
   )
 }
