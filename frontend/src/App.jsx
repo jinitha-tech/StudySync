@@ -8,6 +8,7 @@ import StudyPlannerPage from './features/study-planner/pages/StudyPlannerPage'
 import ResourcesPage from './features/resources/pages/ResourcesPage'
 import StudyTrackingPage from './features/study-tracking/pages/StudyTrackingPage'
 import AnalyticsPage from './features/analytics/pages/AnalyticsPage'
+import NotificationsPage from './features/notifications/NotificationsPage'
 
 import './App.css'
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/study-tracking" element={<StudyTrackingPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
