@@ -1,0 +1,9223 @@
+
+.resources-page {
+  --resources-accent: #635bdb;
+  --resources-accent-hover: #5148c5;
+  --resources-text: #20243a;
+  --resources-muted: #737991;
+  --resources-border: #e6e8f0;
+  --resources-surface: #ffffff;
+  --resources-page-bg: #f7f8fc;
+
+  width: 100%;
+  min-width: 0;
+  padding: 28px;
+  color: var(--resources-text);
+  background: var(--resources-page-bg);
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.resources-page *,
+.resources-page *::before,
+.resources-page *::after {
+  box-sizing: border-box;
+}
+
+.resources-page button,
+.resources-page input,
+.resources-page select,
+.resources-page textarea {
+  font: inherit;
+}
+
+.resources-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.resources-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--resources-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.resources-header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+}
+
+.resources-header p,
+.resources-modal-header p {
+  margin: 0;
+  color: var(--resources-muted);
+  line-height: 1.65;
+}
+
+.resources-primary-button,
+.resources-secondary-button,
+.resources-filter-button,
+.resource-open-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.resources-primary-button {
+  flex-shrink: 0;
+  color: #ffffff;
+  background: var(--resources-accent);
+}
+
+.resources-primary-button:hover {
+  background: var(--resources-accent-hover);
+  transform: translateY(-1px);
+}
+
+.resources-secondary-button {
+  color: var(--resources-text);
+  background: #ffffff;
+  border-color: var(--resources-border);
+}
+
+.resources-secondary-button:hover {
+  background: #f3f3fa;
+}
+
+.resources-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 13px 16px;
+  color: #225b43;
+  background: #eaf8f0;
+  border: 1px solid #ccebd8;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+
+.resources-notice button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.resources-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.resources-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 20px;
+  background: var(--resources-surface);
+  border: 1px solid var(--resources-border);
+  border-radius: 14px;
+}
+
+.summary-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: #f0efff;
+  border-radius: 12px;
+  font-size: 21px;
+}
+
+.resources-summary-card div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.resources-summary-card strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.resources-summary-card div span {
+  color: var(--resources-muted);
+  font-size: 12px;
+}
+
+.resources-toolbar {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(130px, 180px)
+    minmax(130px, 160px) auto;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.resources-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 13px;
+  background: #ffffff;
+  border: 1px solid var(--resources-border);
+  border-radius: 10px;
+}
+
+.resources-search > span {
+  color: var(--resources-muted);
+  font-size: 24px;
+}
+
+.resources-search input {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0;
+  color: var(--resources-text);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.resources-toolbar select,
+.resources-form select,
+.resources-form input:not([type="file"]),
+.resources-form textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  color: var(--resources-text);
+  background: #ffffff;
+  border: 1px solid var(--resources-border);
+  border-radius: 9px;
+  outline: none;
+}
+
+.resources-toolbar select {
+  height: 46px;
+}
+
+.resources-page input:focus,
+.resources-page select:focus,
+.resources-page textarea:focus {
+  border-color: var(--resources-accent);
+  box-shadow: 0 0 0 3px rgb(99 91 219 / 12%);
+}
+
+.resources-filter-button {
+  color: var(--resources-text);
+  background: #ffffff;
+  border-color: var(--resources-border);
+  white-space: nowrap;
+}
+
+.resources-filter-button.active {
+  color: var(--resources-accent);
+  background: #f0efff;
+  border-color: #d8d4ff;
+}
+
+.resources-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.resources-section-heading h2 {
+  margin: 0 0 5px;
+  font-size: 21px;
+}
+
+.resources-section-heading p {
+  margin: 0;
+  color: var(--resources-muted);
+  font-size: 13px;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.resource-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 260px;
+  padding: 20px;
+  background: var(--resources-surface);
+  border: 1px solid var(--resources-border);
+  border-radius: 15px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 26px rgb(32 36 58 / 6%);
+}
+
+.resource-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.resource-type-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: calc(100% - 40px);
+  padding: 6px 9px;
+  color: #5148b6;
+  background: #f0efff;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.resource-bookmark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  color: #777d91;
+  background: #ffffff;
+  border: 1px solid var(--resources-border);
+  border-radius: 9px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.resource-bookmark.saved {
+  color: #d08a00;
+  background: #fff8e5;
+  border-color: #f3dfaa;
+}
+
+.resource-subject {
+  margin-bottom: 7px;
+  color: var(--resources-accent);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.resource-card h3 {
+  margin: 0 0 9px;
+  overflow-wrap: anywhere;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.resource-description {
+  margin: 0 0 17px;
+  color: var(--resources-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.resource-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+  color: var(--resources-muted);
+  border-top: 1px solid #f0f1f6;
+  font-size: 11px;
+}
+
+.resource-file-label {
+  margin: 12px 0 0;
+  color: var(--resources-muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.resource-card-actions {
+  margin-top: 15px;
+}
+
+.resource-open-button {
+  width: 100%;
+  min-height: 42px;
+  color: #ffffff;
+  background: var(--resources-accent);
+}
+
+.resource-open-button:hover {
+  color: #ffffff;
+  background: var(--resources-accent-hover);
+}
+
+.resources-empty {
+  padding: 55px 20px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px dashed #d7daea;
+  border-radius: 15px;
+}
+
+.resources-empty > span {
+  font-size: 34px;
+}
+
+.resources-empty h3 {
+  margin: 14px 0 7px;
+}
+
+.resources-empty p {
+  margin: 0 0 18px;
+  color: var(--resources-muted);
+}
+
+/* Modal shared by Add Notes and Read Notes */
+
+.resources-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 24px;
+  background: rgb(20 23 42 / 55%);
+  backdrop-filter: blur(3px);
+}
+
+.resources-modal {
+  width: min(100%, 620px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 26px;
+  color: var(--resources-text);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 22px 80px rgb(0 0 0 / 20%);
+}
+
+.resources-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.resources-modal-header h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.resources-modal-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  color: var(--resources-muted);
+  background: #f5f6fa;
+  border: 0;
+  border-radius: 9px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.resources-form {
+  display: grid;
+  gap: 17px;
+}
+
+.resources-form label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.resources-form label > span:first-child {
+  color: var(--resources-muted);
+}
+
+.resources-form label > span:first-child:not(.resources-character-count, .resources-field-hint) {
+  font-weight: 400;
+}
+
+.resources-form label > span {
+  line-height: 1.5;
+}
+
+.resources-form label > span:not(.resources-character-count, .resources-field-hint) {
+  color: inherit;
+}
+
+.resources-form label > span:first-child {
+  color: inherit;
+}
+
+.resources-form label > span:first-child {
+  display: inline;
+}
+
+.resources-form label > span:first-child {
+  margin: 0;
+}
+
+.resources-form label > span:first-child {
+  font-size: inherit;
+}
+
+.resources-form label > span:first-child {
+  font-weight: inherit;
+}
+
+.resources-form label > span:first-child {
+  color: inherit;
+}
+
+.resources-form label > span:first-child {
+  line-height: inherit;
+}
+
+.resources-form label > span:first-child {
+  letter-spacing: inherit;
+}
+
+.resources-form label > span:first-child {
+  text-transform: inherit;
+}
+
+.resources-form label > span:first-child {
+  text-decoration: inherit;
+}
+
+.resources-form label > span:first-child {
+  overflow-wrap: anywhere;
+}
+
+.resources-form label > span:first-child {
+  vertical-align: baseline;
+}
+
+.resources-form label > span:first-child {
+  white-space: normal;
+}
+
+.resources-form label > span:first-child {
+  background: transparent;
+}
+
+.resources-form label > span:first-child {
+  border: 0;
+}
+
+.resources-form label > span:first-child {
+  border-radius: 0;
+}
+
+.resources-form label > span:first-child {
+  padding: 0;
+}
+
+.resources-form label > span:first-child {
+  width: auto;
+}
+
+.resources-form label > span:first-child {
+  height: auto;
+}
+
+.resources-form label > span:first-child {
+  max-width: none;
+}
+
+.resources-form label > span:first-child {
+  min-width: 0;
+}
+
+.resources-form label > span:first-child {
+  flex: initial;
+}
+
+.resources-form label > span:first-child {
+  align-items: initial;
+}
+
+.resources-form label > span:first-child {
+  justify-content: initial;
+}
+
+.resources-form label > span:first-child {
+  display: initial;
+}
+
+.resources-form label > span:first-child {
+  box-sizing: border-box;
+}
+
+.resources-form label > span:first-child {
+  cursor: auto;
+}
+
+.resources-form label > span:first-child {
+  opacity: 1;
+}
+
+.resources-form label > span:first-child {
+  visibility: visible;
+}
+
+.resources-form label > span:first-child {
+  position: static;
+}
+
+.resources-form label > span:first-child {
+  inset: auto;
+}
+
+.resources-form label > span:first-child {
+  transform: none;
+}
+
+.resources-form label > span:first-child {
+  transition: none;
+}
+
+.resources-form label > span:first-child {
+  box-shadow: none;
+}
+
+.resources-form label > span:first-child {
+  outline: none;
+}
+
+.resources-form label > span:first-child {
+  filter: none;
+}
+
+.resources-form label > span:first-child {
+  text-shadow: none;
+}
+
+.resources-form label > span:first-child {
+  float: none;
+}
+
+.resources-form label > span:first-child {
+  clear: none;
+}
+
+.resources-form label > span:first-child {
+  z-index: auto;
+}
+
+.resources-form label > span:first-child {
+  pointer-events: auto;
+}
+
+.resources-form label > span:first-child {
+  user-select: auto;
+}
+
+.resources-form label > span:first-child {
+  -webkit-user-select: auto;
+}
+
+.resources-form label > span:first-child {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.resources-form label > span:first-child {
+  appearance: none;
+}
+
+.resources-form label > span:first-child {
+  -webkit-appearance: none;
+}
+
+.resources-form label > span:first-child {
+  -moz-appearance: none;
+}
+
+.resources-form label > span:first-child {
+  -webkit-font-smoothing: antialiased;
+}
+
+.resources-form label > span:first-child {
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.resources-form label > span:first-child {
+  text-rendering: optimizeLegibility;
+}
+
+.resources-form label > span:first-child {
+  font-variant: normal;
+}
+
+.resources-form label > span:first-child {
+  font-feature-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-optical-sizing: auto;
+}
+
+.resources-form label > span:first-child {
+  font-stretch: normal;
+}
+
+.resources-form label > span:first-child {
+  font-style: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-caps: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-weight: auto;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-style: auto;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-small-caps: auto;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-weight: auto;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-style: auto;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-small-caps: auto;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-weight: auto;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-style: auto;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis-weight: auto;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}
+
+.resources-form label > span:first-child {
+  font-synthesis: weight style small-caps;
+}
+
+.resources-form label > span:first-child {
+  font-palette: normal;
+}
+
+.resources-form label > span:first-child {
+  font-size-adjust: none;
+}
+
+.resources-form label > span:first-child {
+  font-variation-settings: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-kerning: auto;
+}
+
+.resources-form label > span:first-child {
+  font-variant-ligatures: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-numeric: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-east-asian: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-position: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-alternates: normal;
+}
+
+.resources-form label > span:first-child {
+  font-variant-emoji: normal;
+}
+
+.resources-form label > span:first-child {
+  font-language-override: normal;
+}

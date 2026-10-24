@@ -8,6 +8,7 @@ const navigationItems = [
   { label: 'Resources', path: '/resources', icon: '▤' },
   { label: 'Study Tracking', path: '/study-tracking', icon: '◷' },
   { label: 'Analytics', path: '/analytics', icon: '↗' },
+  { label: 'Notifications', path: '/notifications', icon: '♧' },
 ]
 
 function Sidebar() {
