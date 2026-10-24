@@ -1,6 +1,47 @@
 
 import { useState, useEffect } from "react";
 import "../study-planner.css";
+const API_URL = "http://localhost:5050/api/planner";
+
+function fromApiTask(task) {
+  return {
+    id: task.id,
+    title: task.title,
+    subject: task.description || "",
+    dueDate: task.deadline || "",
+    priority:
+      (task.priority || "medium").charAt(0).toUpperCase() +
+      (task.priority || "medium").slice(1),
+    completed: task.completed,
+  };
+}
+
+function toApiTask(task) {
+  return {
+    title: task.title,
+    description: task.subject,
+    deadline: task.dueDate || null,
+    priority: task.priority.toLowerCase(),
+    completed: task.completed,
+  };
+}
+
+async function apiRequest(url, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `Request failed: ${response.status}`);
+  }
+
+  return response.status === 204 ? null : response.json();
+}
 
 const STORAGE_KEY = "studysync-study-planner-tasks";
 
@@ -59,7 +100,9 @@ function loadTasks() {
 }
 
 function StudyPlannerPage() {
-  const [tasks, setTasks] = useState(loadTasks);
+  const [tasks, setTasks] = useState([]);
+const [loading, setLoading] = useState(true);
+const [apiError, setApiError] = useState("");
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -71,12 +114,15 @@ function StudyPlannerPage() {
   const [sortBy, setSortBy] = useState("dueDateAsc");
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-    } catch (error) {
-      console.error("Could not save study tasks:", error);
-    }
-  }, [tasks]);
+  apiRequest(API_URL)
+    .then((result) => {
+      setTasks(result.data.map(fromApiTask));
+    })
+    .catch((error) => {
+      setApiError(error.message);
+    })
+    .finally(() => setLoading(false));
+}, []);
 
   function resetForm() {
     setEditingTaskId(null);
@@ -86,73 +132,97 @@ function StudyPlannerPage() {
     setPriority("Medium");
   }
 
-  function handleAddTask(event) {
-    event.preventDefault();
+  async function handleAddTask(event) {
+  event.preventDefault();
 
-    const trimmedTitle = title.trim();
-    const trimmedSubject = subject.trim();
+  const trimmedTitle = title.trim();
+  const trimmedSubject = subject.trim();
 
-    if (!trimmedTitle || !trimmedSubject || !dueDate) return;
+  if (!trimmedTitle || !trimmedSubject || !dueDate) return;
+
+  const payload = toApiTask({
+    title: trimmedTitle,
+    subject: trimmedSubject,
+    dueDate,
+    priority,
+    completed: false,
+  });
+
+  try {
+    setApiError("");
 
     if (editingTaskId !== null) {
-      setTasks((currentTasks) =>
-        currentTasks.map((task) =>
+      const result = await apiRequest(
+        `${API_URL}/${editingTaskId}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        }
+      );
+
+      setTasks((current) =>
+        current.map((task) =>
           task.id === editingTaskId
-            ? {
-                ...task,
-                title: trimmedTitle,
-                subject: trimmedSubject,
-                dueDate,
-                priority,
-              }
+            ? fromApiTask(result.data)
             : task
         )
       );
+    } else {
+      const result = await apiRequest(API_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
 
-      resetForm();
-      return;
+      setTasks((current) => [...current, fromApiTask(result.data)]);
     }
 
-    const newTask = {
-      id: Date.now(),
-      title: trimmedTitle,
-      subject: trimmedSubject,
-      dueDate,
-      priority,
-      completed: false,
-    };
-
-    setTasks((currentTasks) => [...currentTasks, newTask]);
     resetForm();
+  } catch (error) {
+    setApiError(error.message);
   }
+}
 
-  function handleToggleTask(taskId) {
-    setTasks((currentTasks) =>
-      currentTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, completed: !task.completed }
-          : task
+async function handleToggleTask(taskId) {
+  const task = tasks.find((item) => item.id === taskId);
+  if (!task) return;
+
+  try {
+    setApiError("");
+
+    const result = await apiRequest(
+      `${API_URL}/${taskId}/complete`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ completed: !task.completed }),
+      }
+    );
+
+    setTasks((current) =>
+      current.map((item) =>
+        item.id === taskId ? fromApiTask(result.data) : item
       )
     );
+  } catch (error) {
+    setApiError(error.message);
   }
+}
 
-  function handleDeleteTask(taskId) {
-    setTasks((currentTasks) =>
-      currentTasks.filter((task) => task.id !== taskId)
+async function handleDeleteTask(taskId) {
+  try {
+    setApiError("");
+    await apiRequest(`${API_URL}/${taskId}`, { method: "DELETE" });
+
+    setTasks((current) =>
+      current.filter((task) => task.id !== taskId)
     );
 
-    if (editingTaskId === taskId) {
-      resetForm();
-    }
+    if (editingTaskId === taskId) resetForm();
+  } catch (error) {
+    setApiError(error.message);
   }
+}
 
-  function handleStartEdit(task) {
-    setEditingTaskId(task.id);
-    setTitle(task.title);
-    setSubject(task.subject);
-    setDueDate(task.dueDate);
-    setPriority(task.priority);
-  }
+    
 
   const completedCount = tasks.filter((task) => task.completed).length;
   const pendingCount = tasks.length - completedCount;
@@ -216,7 +286,8 @@ function StudyPlannerPage() {
           <span>{pendingCount} tasks remaining</span>
         </div>
       </header>
-
+{apiError && <p role="alert">{apiError}</p>}
+{loading && <p>Loading study tasks...</p>}
       <section className="planner-panel">
         <h3>{editingTaskId !== null ? "Edit study task" : "Add a study task"}</h3>
 
