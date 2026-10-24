@@ -1,17 +1,24 @@
+
 import { useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'studysync-study-planner-tasks'
+const API_URL = 'http://localhost:5050/api/planner'
 
 function StatsGrid() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    function loadTasks() {
+    async function loadTasks() {
       try {
-        const savedTasks = localStorage.getItem(STORAGE_KEY)
-        const parsedTasks = savedTasks ? JSON.parse(savedTasks) : []
+        const response = await fetch(API_URL)
 
-        setTasks(Array.isArray(parsedTasks) ? parsedTasks : [])
+        if (!response.ok) {
+          throw new Error('Could not load planner tasks')
+        }
+
+        const result = await response.json()
+        const apiTasks = Array.isArray(result.data) ? result.data : []
+
+        setTasks(apiTasks)
       } catch (error) {
         console.error('Could not load study planner tasks:', error)
         setTasks([])
@@ -20,11 +27,9 @@ function StatsGrid() {
 
     loadTasks()
     window.addEventListener('focus', loadTasks)
-    window.addEventListener('storage', loadTasks)
 
     return () => {
       window.removeEventListener('focus', loadTasks)
-      window.removeEventListener('storage', loadTasks)
     }
   }, [])
 
