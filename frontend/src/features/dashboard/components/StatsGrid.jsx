@@ -1,15 +1,13 @@
 
 import { useEffect, useState } from 'react'
-
-const API_URL = 'http://localhost:5050/api/planner'
-
+import { PLANNER_API_URL } from "../../../config/api";
 function StatsGrid() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     async function loadTasks() {
       try {
-        const response = await fetch(API_URL)
+        const response = await fetch(PLANNER_API_URL)
 
         if (!response.ok) {
           throw new Error('Could not load planner tasks')

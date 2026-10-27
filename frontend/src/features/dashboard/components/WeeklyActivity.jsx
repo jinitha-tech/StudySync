@@ -1,31 +1,36 @@
-
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
-const API_URL = 'http://localhost:5050/api/planner'
-
-function getDeadlineStatus(task) {
-  if (task.completed) return 'Completed'
-  if (!task.dueDate) return 'No due date'
-
-  const dueDate = new Date(`${task.dueDate}T00:00:00`)
+import '../dashboard.css'
+import { PLANNER_API_URL } from "../../../config/api";
+function getDayLabels() {
   const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  const startOfWeek = new Date(today)
+  const day = today.getDay()
 
-  if (Number.isNaN(dueDate.getTime())) return 'No due date'
-  if (dueDate < today) return 'Overdue'
-  if (dueDate.getTime() === today.getTime()) return 'Due today'
+  // Monday is the first day of the week.
+  startOfWeek.setDate(today.getDate() - ((day + 6) % 7))
+  startOfWeek.setHours(0, 0, 0, 0)
 
-  return 'Upcoming'
+  return Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(startOfWeek)
+    date.setDate(startOfWeek.getDate() + index)
+
+    return {
+      label: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      date: date.toISOString().slice(0, 10),
+    }
+  })
 }
 
-function UpcomingDeadlines() {
+function WeeklyActivity() {
   const [tasks, setTasks] = useState([])
+  const [error, setError] = useState(false)
 
   useEffect(() => {
+    let active = true
+
     async function loadTasks() {
       try {
-        const response = await fetch(API_URL)
+        const response = await fetch(PLANNER_API_URL)
 
         if (!response.ok) {
           throw new Error('Could not load planner tasks')
@@ -34,16 +39,17 @@ function UpcomingDeadlines() {
         const result = await response.json()
         const apiTasks = Array.isArray(result.data) ? result.data : []
 
-        const mappedTasks = apiTasks.map((task) => ({
-          ...task,
-          dueDate: task.deadline || task.dueDate || '',
-          subject: task.description || task.subject || '',
-        }))
+        if (active) {
+          setTasks(apiTasks)
+          setError(false)
+        }
+      } catch (err) {
+        console.error('Could not load weekly activity:', err)
 
-        setTasks(mappedTasks)
-      } catch (error) {
-        console.error('Could not load upcoming deadlines:', error)
-        setTasks([])
+        if (active) {
+          setError(true)
+          setTasks([])
+        }
       }
     }
 
@@ -51,75 +57,90 @@ function UpcomingDeadlines() {
     window.addEventListener('focus', loadTasks)
 
     return () => {
+      active = false
       window.removeEventListener('focus', loadTasks)
     }
   }, [])
 
-  const upcomingTasks = tasks
-    .filter((task) => !task.completed && task.dueDate)
-    .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
-    .slice(0, 5)
+  const days = getDayLabels()
+
+  // Count tasks created on each day, using the task's creation timestamp.
+  const activity = days.map((day) => {
+    const count = tasks.filter((task) => {
+      const createdAt = task.createdAt || task.created_at
+
+      if (!createdAt) return false
+
+      const date = new Date(createdAt)
+
+      if (Number.isNaN(date.getTime())) return false
+
+      const localDate = [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, '0'),
+        String(date.getDate()).padStart(2, '0'),
+      ].join('-')
+
+      return localDate === day.date
+    }).length
+
+    return { ...day, count }
+  })
+
+  const maxCount = Math.max(...activity.map((day) => day.count), 1)
+  const total = activity.reduce((sum, day) => sum + day.count, 0)
 
   return (
-    <section className="deadlines-card">
-      <div className="deadlines-header">
+    <section className="weekly-activity-card">
+      <div className="weekly-activity-header">
         <div>
-          <h3>Upcoming deadlines</h3>
-          <p>Stay on top of your study tasks.</p>
+          <h3>Weekly activity</h3>
+          <p>Study tasks created this week.</p>
         </div>
 
-        <Link to="/study-planner" className="deadlines-link">
-          View planner →
-        </Link>
+        <strong>{total} tasks</strong>
       </div>
 
-      {upcomingTasks.length === 0 ? (
-        <div className="deadlines-empty">
-          <span className="deadlines-empty-icon" aria-hidden="true">
-            ✓
-          </span>
-          <p>You're all caught up!</p>
-          <span>Add a task in your Study Planner to see it here.</span>
-          <Link to="/study-planner" className="deadlines-add-link">
-            + Add a study task
-          </Link>
-        </div>
+      {error ? (
+        <p role="alert">
+          Could not load activity. Check that the backend is running.
+        </p>
       ) : (
-        <div className="deadlines-list">
-          {upcomingTasks.map((task) => {
-            const status = getDeadlineStatus(task)
-            const dueDate = new Date(`${task.dueDate}T00:00:00`)
+        <>
+          <div
+            className="weekly-activity-chart"
+            role="img"
+            aria-label={`Tasks created this week: ${activity
+              .map((day) => `${day.label}: ${day.count}`)
+              .join(', ')}`}
+          >
+            {activity.map((day) => (
+              <div className="weekly-activity-day" key={day.date}>
+                <span className="weekly-activity-count">{day.count}</span>
 
-            return (
-              <article className="deadline-item" key={task.id}>
-                <div className="deadline-date">
-                  <span>
-                    {dueDate.toLocaleDateString('en', {
-                      month: 'short',
-                    })}
-                  </span>
-                  <strong>{dueDate.getDate()}</strong>
+                <div className="weekly-activity-bar-track">
+                  <div
+                    className="weekly-activity-bar"
+                    style={{
+                      height: `${day.count === 0 ? 0 : Math.max((day.count / maxCount) * 100, 8)}%`,
+                    }}
+                  />
                 </div>
 
-                <div className="deadline-details">
-                  <h4>{task.title}</h4>
-                  <p>{task.subject || 'General study'}</p>
-                </div>
+                <span className="weekly-activity-label">{day.label}</span>
+              </div>
+            ))}
+          </div>
 
-                <span
-                  className={`deadline-status deadline-${status
-                    .toLowerCase()
-                    .replace(/\s+/g, '-')}`}
-                >
-                  {status}
-                </span>
-              </article>
-            )
-          })}
-        </div>
+          {total === 0 && (
+            <p className="weekly-activity-empty">
+              No tasks created this week yet. Add a study task to get started!
+            </p>
+          )}
+        </>
       )}
     </section>
   )
 }
 
-export default UpcomingDeadlines
+export default WeeklyActivity

@@ -1,8 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "../study-planner.css";
-const API_URL = "http://localhost:5050/api/planner";
-
+import { PLANNER_API_URL } from "../../../config/api";
 function fromApiTask(task) {
   return {
     id: task.id,
@@ -45,24 +44,7 @@ async function apiRequest(url, options = {}) {
 
 const STORAGE_KEY = "studysync-study-planner-tasks";
 
-const initialTasks = [
-  {
-    id: 1,
-    title: "Review lecture notes",
-    subject: "Computer Science",
-    dueDate: "2026-10-21",
-    priority: "High",
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Practice mathematics problems",
-    subject: "Mathematics",
-    dueDate: "2026-10-23",
-    priority: "Medium",
-    completed: false,
-  },
-];
+
 
 function getDeadlineStatus(task) {
   if (task.completed) return "Completed";
@@ -114,7 +96,7 @@ const [apiError, setApiError] = useState("");
   const [sortBy, setSortBy] = useState("dueDateAsc");
 
   useEffect(() => {
-  apiRequest(API_URL)
+  apiRequest(PLANNER_API_URL)
     .then((result) => {
       setTasks(result.data.map(fromApiTask));
     })
@@ -131,6 +113,21 @@ const [apiError, setApiError] = useState("");
     setDueDate("");
     setPriority("Medium");
   }
+
+function handleStartEdit(task) {
+  setEditingTaskId(task.id);
+  setTitle(task.title || "");
+  setSubject(task.subject || "");
+  setDueDate(task.dueDate || "");
+  setPriority(task.priority || "Medium");
+  setApiError("");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
 
   async function handleAddTask(event) {
   event.preventDefault();
@@ -153,7 +150,7 @@ const [apiError, setApiError] = useState("");
 
     if (editingTaskId !== null) {
       const result = await apiRequest(
-        `${API_URL}/${editingTaskId}`,
+        `${PLANNER_API_URL}/${editingTaskId}`,
         {
           method: "PUT",
           body: JSON.stringify(payload),
@@ -168,7 +165,7 @@ const [apiError, setApiError] = useState("");
         )
       );
     } else {
-      const result = await apiRequest(API_URL, {
+      const result = await apiRequest(PLANNER_API_URL, {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -190,7 +187,7 @@ async function handleToggleTask(taskId) {
     setApiError("");
 
     const result = await apiRequest(
-      `${API_URL}/${taskId}/complete`,
+      `${PLANNER_API_URL}/${taskId}/complete`,
       {
         method: "PATCH",
         body: JSON.stringify({ completed: !task.completed }),
@@ -210,7 +207,7 @@ async function handleToggleTask(taskId) {
 async function handleDeleteTask(taskId) {
   try {
     setApiError("");
-    await apiRequest(`${API_URL}/${taskId}`, { method: "DELETE" });
+    await apiRequest(`${PLANNER_API_URL}/${taskId}`, { method: "DELETE" });
 
     setTasks((current) =>
       current.filter((task) => task.id !== taskId)

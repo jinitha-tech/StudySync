@@ -1,8 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const STORAGE_KEY = "studysync-study-planner-tasks";
+import { PLANNER_API_URL } from "../../../config/api";
 
 function getDeadlineStatus(task) {
   if (task.completed) return "Completed";
@@ -23,28 +22,48 @@ function UpcomingDeadlines() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    function loadTasks() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        const parsed = saved ? JSON.parse(saved) : [];
-        setTasks(Array.isArray(parsed) ? parsed : []);
-      } catch (error) {
-        console.error("Could not load study planner tasks:", error);
+  let cancelled = false;
+
+  async function loadTasks() {
+    try {
+      const response = await fetch(PLANNER_API_URL);
+
+      if (!response.ok) {
+        throw new Error(`Failed to load tasks: ${response.status}`);
+      }
+
+      const result = await response.json();
+      const apiTasks = Array.isArray(result)
+        ? result
+        : result.data || [];
+
+      if (!cancelled) {
+        setTasks(
+          apiTasks.map((task) => ({
+            ...task,
+            subject: task.description || task.subject || "",
+            dueDate: task.deadline || task.dueDate || "",
+          }))
+        );
+      }
+    } catch (error) {
+      console.error("Could not load study planner tasks:", error);
+
+      if (!cancelled) {
         setTasks([]);
       }
     }
+  }
 
-    loadTasks();
+  loadTasks();
 
-    // Refresh when the user returns to this tab.
-    window.addEventListener("focus", loadTasks);
-    window.addEventListener("storage", loadTasks);
+  window.addEventListener("focus", loadTasks);
 
-    return () => {
-      window.removeEventListener("focus", loadTasks);
-      window.removeEventListener("storage", loadTasks);
-    };
-  }, []);
+  return () => {
+    cancelled = true;
+    window.removeEventListener("focus", loadTasks);
+  };
+}, []);
 
   const upcomingTasks = tasks
     .filter((task) => !task.completed && task.dueDate)
