@@ -58,6 +58,7 @@ function AnalyticsPage() {
     readStorage(GOAL_KEY, DEFAULT_GOALS)
   );
   const [goalMessage, setGoalMessage] = useState("");
+  const [refDate] = useState(() => new Date());
 
   useEffect(() => {
     function refresh() {
@@ -74,11 +75,10 @@ function AnalyticsPage() {
   }, []);
 
   const data = useMemo(() => {
-    const now = new Date();
-    const todayKey = getDayKey(now);
+    const todayKey = getDayKey(refDate);
 
     const days = Array.from({ length: Number(range) }, (_, i) => {
-      const date = new Date();
+      const date = new Date(refDate);
       date.setHours(0, 0, 0, 0);
       date.setDate(date.getDate() - (Number(range) - 1 - i));
 
@@ -120,7 +120,7 @@ function AnalyticsPage() {
       .sort((a, b) => b.minutes - a.minutes);
 
     const previousDays = Array.from({ length: Number(range) }, (_, i) => {
-      const date = new Date();
+      const date = new Date(refDate);
       date.setHours(0, 0, 0, 0);
       date.setDate(date.getDate() - Number(range) - (Number(range) - 1 - i));
       return getDayKey(date);
@@ -140,7 +140,7 @@ function AnalyticsPage() {
     );
 
     let streak = 0;
-    const streakDate = new Date();
+    const streakDate = new Date(refDate);
     streakDate.setHours(0, 0, 0, 0);
 
     if (!studyDates.has(getDayKey(streakDate))) {
@@ -160,7 +160,7 @@ function AnalyticsPage() {
 
     // Four-week activity grid, using real recorded sessions.
     const heatmap = Array.from({ length: 28 }, (_, i) => {
-      const date = new Date();
+      const date = new Date(refDate);
       date.setHours(0, 0, 0, 0);
       date.setDate(date.getDate() - (27 - i));
 
@@ -186,7 +186,7 @@ function AnalyticsPage() {
       heatmap,
       sessionsCount: sessions.length,
     };
-  }, [sessions, range]);
+  }, [sessions, range, refDate]);
 
   const maxDaily = Math.max(...data.days.map((d) => d.minutes), 1);
   const maxSubject = Math.max(...data.subjects.map((s) => s.minutes), 1);

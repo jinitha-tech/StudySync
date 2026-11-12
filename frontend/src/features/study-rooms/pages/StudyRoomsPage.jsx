@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import RoomCard from "../components/RoomCard";
+import { useNotifications } from "../../../context/useNotifications";
 import "../study-rooms.css";
 
 const initialRooms = [
@@ -34,6 +35,7 @@ const initialRooms = [
 ];
 
 function StudyRoomsPage() {
+  const { showToast } = useNotifications();
   const [rooms, setRooms] = useState(() => {
     try {
       const saved = localStorage.getItem("studysync-study-rooms");
@@ -59,6 +61,7 @@ function StudyRoomsPage() {
   }
 
   function joinRoom(roomId) {
+    const targetRoom = rooms.find((r) => r.id === roomId);
     const updatedRooms = rooms.map((room) => {
       if (room.id !== roomId || room.joined) return room;
       if (room.members >= room.capacity) return room;
@@ -71,9 +74,13 @@ function StudyRoomsPage() {
     });
 
     saveRooms(updatedRooms);
+    if (targetRoom) {
+      showToast({ title: "Joined Study Room 👥", message: `You joined "${targetRoom.name}"!`, type: "general" });
+    }
   }
 
   function leaveRoom(roomId) {
+    const targetRoom = rooms.find((r) => r.id === roomId);
     const updatedRooms = rooms.map((room) => {
       if (room.id !== roomId || !room.joined) return room;
 
@@ -85,6 +92,9 @@ function StudyRoomsPage() {
     });
 
     saveRooms(updatedRooms);
+    if (targetRoom) {
+      showToast({ title: "Left Room", message: `You left "${targetRoom.name}".`, type: "general" });
+    }
   }
 
   function createRoom(event) {
@@ -105,6 +115,7 @@ function StudyRoomsPage() {
     };
 
     saveRooms([newRoom, ...rooms]);
+    showToast({ title: "Study Room Created 👥", message: `"${name}" is ready!`, type: "general" });
     setRoomName("");
     setDescription("");
     setShowCreateForm(false);

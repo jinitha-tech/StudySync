@@ -13,3 +13,9 @@ dist-ssr/
 # Logs and operating system files
 *.log
 .DS_Store
+
+# SQLite Database
+*.db
+*.db-wal
+*.db-shm
+backend/data/

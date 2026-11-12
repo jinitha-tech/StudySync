@@ -314,6 +314,80 @@
   outline-offset: 3px;
 }
 
+.notifications-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notification-add-form {
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-color, #e8e7f0);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.notification-add-form h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  color: var(--text-primary, #25263a);
+}
+
+.notification-add-form .form-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.notification-add-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notification-add-form label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #77788b);
+}
+
+.notification-add-form input,
+.notification-add-form select,
+.notification-add-form textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border-color, #e8e7f0);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg-input, #faf9fe);
+  color: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.notification-add-form input:focus,
+.notification-add-form select:focus,
+.notification-add-form textarea:focus {
+  border-color: #6553bd;
+  background: #ffffff;
+}
+
+.notification-add-form .form-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .notification-add-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   .notifications-page {
     padding: 20px 14px;

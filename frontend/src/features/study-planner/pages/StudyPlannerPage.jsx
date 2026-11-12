@@ -1,7 +1,8 @@
 
 import { useState, useEffect } from "react";
 import "../study-planner.css";
-import { PLANNER_API_URL } from "../../../config/api";
+import { PLANNER_API_URL, getAuthHeaders } from "../../../config/api";
+import { useNotifications } from "../../../context/useNotifications";
 function fromApiTask(task) {
   return {
     id: task.id,
@@ -28,10 +29,7 @@ function toApiTask(task) {
 async function apiRequest(url, options = {}) {
   const response = await fetch(url, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
+    headers: getAuthHeaders(null, options.headers),
   });
 
   if (!response.ok) {
@@ -41,10 +39,6 @@ async function apiRequest(url, options = {}) {
 
   return response.status === 204 ? null : response.json();
 }
-
-const STORAGE_KEY = "studysync-study-planner-tasks";
-
-
 
 function getDeadlineStatus(task) {
   if (task.completed) return "Completed";
@@ -63,25 +57,8 @@ function getDeadlineStatus(task) {
   return "Upcoming";
 }
 
-function loadTasks() {
-  try {
-    const savedTasks = localStorage.getItem(STORAGE_KEY);
-
-    if (savedTasks !== null) {
-      const parsedTasks = JSON.parse(savedTasks);
-
-      if (Array.isArray(parsedTasks)) {
-        return parsedTasks;
-      }
-    }
-  } catch (error) {
-    console.error("Could not load saved study tasks:", error);
-  }
-
-  return initialTasks;
-}
-
 function StudyPlannerPage() {
+  const { showToast, fetchNotifications } = useNotifications();
   const [tasks, setTasks] = useState([]);
 const [loading, setLoading] = useState(true);
 const [apiError, setApiError] = useState("");
@@ -164,6 +141,7 @@ function handleStartEdit(task) {
             : task
         )
       );
+      showToast({ title: "Task Updated", message: `"${trimmedTitle}" was updated.`, type: "task" });
     } else {
       const result = await apiRequest(PLANNER_API_URL, {
         method: "POST",
@@ -171,6 +149,8 @@ function handleStartEdit(task) {
       });
 
       setTasks((current) => [...current, fromApiTask(result.data)]);
+      showToast({ title: "Task Scheduled 📝", message: `"${trimmedTitle}" scheduled for ${dueDate}.`, type: "task" });
+      fetchNotifications();
     }
 
     resetForm();
@@ -199,6 +179,11 @@ async function handleToggleTask(taskId) {
         item.id === taskId ? fromApiTask(result.data) : item
       )
     );
+
+    if (!task.completed) {
+      showToast({ title: "Task Completed! 🎉", message: `Finished "${task.title}"!`, type: "achievement" });
+      fetchNotifications();
+    }
   } catch (error) {
     setApiError(error.message);
   }
@@ -213,6 +198,7 @@ async function handleDeleteTask(taskId) {
       current.filter((task) => task.id !== taskId)
     );
 
+    showToast({ title: "Task Removed", message: "Task was deleted.", type: "general" });
     if (editingTaskId === taskId) resetForm();
   } catch (error) {
     setApiError(error.message);

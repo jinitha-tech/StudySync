@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
 
-const SESSIONS_KEY = 'studysync-study-sessions'
+const SESSIONS_KEY = 'studysync-study-tracking'
+const LEGACY_SESSIONS_KEY = 'studysync-study-sessions'
 const GOAL_KEY = 'studysync-daily-study-goal'
 
-function getToday() {
-  const today = new Date()
-  const year = today.getFullYear()
-  const month = String(today.getMonth() + 1).padStart(2, '0')
-  const day = String(today.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
+function isSameDay(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return false;
+  const today = new Date();
+  return (
+    d.getFullYear() === today.getFullYear() &&
+    d.getMonth() === today.getMonth() &&
+    d.getDate() === today.getDate()
+  );
 }
 
 function DailyStudyGoal() {
@@ -25,7 +30,7 @@ function DailyStudyGoal() {
   useEffect(() => {
     function loadSessions() {
       try {
-        const saved = localStorage.getItem(SESSIONS_KEY)
+        const saved = localStorage.getItem(SESSIONS_KEY) || localStorage.getItem(LEGACY_SESSIONS_KEY)
         const parsed = saved ? JSON.parse(saved) : []
         setSessions(Array.isArray(parsed) ? parsed : [])
       } catch {
@@ -44,8 +49,11 @@ function DailyStudyGoal() {
   }, [])
 
   const todayHours = sessions
-    .filter((session) => session.date === getToday())
-    .reduce((total, session) => total + Number(session.hours || 0), 0)
+    .filter((session) => isSameDay(session.date))
+    .reduce((total, session) => {
+      const hours = session.hours !== undefined ? Number(session.hours) : Number(session.minutes || 0) / 60;
+      return total + (Number.isFinite(hours) ? hours : 0);
+    }, 0)
 
   const progress = Math.min((todayHours / goal) * 100, 100)
   const goalReached = todayHours >= goal

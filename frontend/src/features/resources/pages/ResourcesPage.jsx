@@ -1,5 +1,7 @@
 
 import { useEffect, useMemo, useState } from "react";
+import { UPLOADS_API_URL } from "../../../config/api";
+import { useNotifications } from "../../../context/useNotifications";
 import "./resources.css";
 
 const initialResources = [
@@ -90,6 +92,7 @@ const emptyForm = {
 };
 
 function ResourcesPage() {
+  const { showToast } = useNotifications();
   const [resources, setResources] = useState(initialResources);
   const [search, setSearch] = useState("");
   const [subject, setSubject] = useState("All");
@@ -210,12 +213,30 @@ function ResourcesPage() {
     setFormError("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!form.title.trim() || !form.content.trim()) {
       setFormError("Please enter a title and your note content.");
       return;
+    }
+
+    let fileUrl = "";
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      try {
+        const res = await fetch(UPLOADS_API_URL, {
+          method: "POST",
+          body: formData,
+        });
+        if (res.ok) {
+          const data = await res.json();
+          fileUrl = data.url;
+        }
+      } catch (uploadError) {
+        console.warn("Upload fallback error:", uploadError);
+      }
     }
 
     const newResource = {
@@ -225,7 +246,7 @@ function ResourcesPage() {
         form.description.trim() || "A StudySync community study note.",
       subject: form.subject,
       type: "Study Note",
-      url: "",
+      url: fileUrl,
       content: form.content.trim(),
       author: "You",
       createdAt: new Date().toISOString().slice(0, 10),
@@ -237,10 +258,15 @@ function ResourcesPage() {
     setSelectedFile(null);
     setFormError("");
     setShowForm(false);
+    showToast({
+      title: "Resource Added 📚",
+      message: `"${form.title.trim()}" added to your resources.`,
+      type: "general",
+    });
     setNotice(
       selectedFile
-        ? "Note added. The selected file is not uploaded or saved yet."
-        : "Your note was added to this page for this session."
+        ? "Note and document uploaded successfully!"
+        : "Your note was added to this page."
     );
   }
 

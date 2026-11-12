@@ -1,50 +1,135 @@
-let tasks = [];
-let nextId = 1;
+const db = require("../db/database");
 
 function findAll() {
-  return [...tasks];
+  const stmt = db.prepare("SELECT * FROM tasks ORDER BY id DESC");
+  const rows = stmt.all();
+
+  return rows.map((row) => ({
+    id: row.id,
+    userId: row.user_id,
+    title: row.title,
+    description: row.description || "",
+    deadline: row.deadline || null,
+    priority: row.priority || "medium",
+    completed: Boolean(row.completed),
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  }));
 }
 
 function findById(id) {
-  return tasks.find((task) => task.id === Number(id)) || null;
+  const stmt = db.prepare("SELECT * FROM tasks WHERE id = ?");
+  const row = stmt.get(Number(id));
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    userId: row.user_id,
+    title: row.title,
+    description: row.description || "",
+    deadline: row.deadline || null,
+    priority: row.priority || "medium",
+    completed: Boolean(row.completed),
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
 }
 
 function create(data) {
-  const task = {
-    id: nextId++,
-    title: data.title.trim(),
-    description: data.description || "",
-    deadline: data.deadline || null,
-    priority: data.priority || "medium",
-    completed: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  };
+  const now = new Date().toISOString();
+  const stmt = db.prepare(`
+    INSERT INTO tasks (user_id, title, description, deadline, priority, completed, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
 
-  tasks.push(task);
-  return task;
+  const result = stmt.run(
+    data.userId || null,
+    data.title.trim(),
+    data.description || "",
+    data.deadline || null,
+    data.priority || "medium",
+    data.completed ? 1 : 0,
+    now,
+    now
+  );
+
+  const taskId = Number(result.lastInsertRowid);
+
+  // Automatically create a notification for task creation
+  try {
+    const notifStmt = db.prepare(
+      "INSERT INTO notifications (id, user_id, title, message, type, read, link, created_at) VALUES (?, ?, ?, ?, ?, 0, ?, ?)"
+    );
+    notifStmt.run(
+      `notif_task_${Date.now()}`,
+      data.userId || null,
+      "New Study Task Added",
+      `"${data.title.trim()}" was scheduled${data.deadline ? ` for ${data.deadline}` : ""}.`,
+      "task",
+      "/study-planner",
+      now
+    );
+  } catch (err) {
+    console.error("Auto notification error:", err);
+  }
+
+  return findById(taskId);
 }
 
 function update(id, data) {
-  const task = findById(id);
-  if (!task) return null;
+  const existing = findById(id);
+  if (!existing) return null;
 
-  if (data.title !== undefined) task.title = data.title.trim();
-  if (data.description !== undefined) task.description = data.description;
-  if (data.deadline !== undefined) task.deadline = data.deadline;
-  if (data.priority !== undefined) task.priority = data.priority;
-  if (data.completed !== undefined) task.completed = data.completed;
+  const title = data.title !== undefined ? data.title.trim() : existing.title;
+  const description = data.description !== undefined ? data.description : existing.description;
+  const deadline = data.deadline !== undefined ? data.deadline : existing.deadline;
+  const priority = data.priority !== undefined ? data.priority : existing.priority;
+  const completed = data.completed !== undefined ? Boolean(data.completed) : existing.completed;
+  const now = new Date().toISOString();
 
-  task.updatedAt = new Date().toISOString();
-  return task;
+  const stmt = db.prepare(`
+    UPDATE tasks
+    SET title = ?, description = ?, deadline = ?, priority = ?, completed = ?, updated_at = ?
+    WHERE id = ?
+  `);
+
+  stmt.run(
+    title,
+    description,
+    deadline,
+    priority,
+    completed ? 1 : 0,
+    now,
+    Number(id)
+  );
+
+  // If marked completed, create an achievement notification
+  if (data.completed === true && !existing.completed) {
+    try {
+      const notifStmt = db.prepare(
+        "INSERT INTO notifications (id, user_id, title, message, type, read, link, created_at) VALUES (?, ?, ?, ?, ?, 0, ?, ?)"
+      );
+      notifStmt.run(
+        `notif_comp_${Date.now()}`,
+        existing.userId || null,
+        "Task Completed! 🎉",
+        `Great job finishing "${title}"! Keep up the momentum.`,
+        "achievement",
+        "/study-planner",
+        now
+      );
+    } catch (err) {
+      console.error("Auto completion notification error:", err);
+    }
+  }
+
+  return findById(id);
 }
 
 function remove(id) {
-  const index = tasks.findIndex((task) => task.id === Number(id));
-  if (index === -1) return false;
-
-  tasks.splice(index, 1);
-  return true;
+  const stmt = db.prepare("DELETE FROM tasks WHERE id = ?");
+  const result = stmt.run(Number(id));
+  return result.changes > 0;
 }
 
 module.exports = { findAll, findById, create, update, remove };

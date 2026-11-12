@@ -1,13 +1,15 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import FocusTimer from "../components/FocusTimer";
+import { useNotifications } from "../../../context/useNotifications";
 import "../study-tracking.css";
 
 const STORAGE_KEY = "studysync-study-tracking";
+const LEGACY_KEY = "studysync-study-sessions";
 
 function loadSessions() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_KEY);
+    return saved ? JSON.parse(saved) : [];
   } catch {
     return [];
   }
@@ -16,32 +18,69 @@ function loadSessions() {
 function StudyTrackingPage() {
   const [subject, setSubject] = useState("");
   const [sessions, setSessions] = useState(loadSessions);
+  const { addNotification } = useNotifications();
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+      // Mirror to legacy sessions with hours for backward compatibility
+      const legacySessions = sessions.map((s) => ({
+        id: s.id,
+        subject: s.subject,
+        hours: (s.minutes || 0) / 60,
+        date: s.date ? s.date.slice(0, 10) : "",
+      }));
+      localStorage.setItem(LEGACY_KEY, JSON.stringify(legacySessions));
+    } catch (e) {
+      console.warn("Session storage save error:", e);
+    }
   }, [sessions]);
 
   function handleSessionComplete(minutes) {
+    const studySubject = subject.trim() || "General Study";
     const newSession = {
-      id: `${Date.now()}-${Math.random()}`,
-      subject: subject.trim() || "General Study",
+      id: `${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      subject: studySubject,
       minutes,
+      hours: minutes / 60,
       date: new Date().toISOString(),
     };
 
     setSessions((previous) => [...previous, newSession]);
+
+    // Dispatch real notification and toast
+    addNotification({
+      title: "Focus Session Completed! ⏱️",
+      message: `Great job! You logged ${minutes} min of ${studySubject}.`,
+      type: "achievement",
+    });
   }
 
-  const totalMinutes = sessions.reduce(
-    (total, session) => total + session.minutes,
-    0
-  );
+  const [mountDate] = useState(() => new Date());
 
-  const today = new Date().toDateString();
+  const { totalMinutes, todayMinutes } = useMemo(() => {
+    const todayStr = `${mountDate.getFullYear()}-${mountDate.getMonth()}-${mountDate.getDate()}`;
 
-  const todayMinutes = sessions
-    .filter((session) => new Date(session.date).toDateString() === today)
-    .reduce((total, session) => total + session.minutes, 0);
+    let total = 0;
+    let todayTotal = 0;
+
+    for (const session of sessions) {
+      const mins = Number(session.minutes) || 0;
+      total += mins;
+
+      if (session.date) {
+        const d = new Date(session.date);
+        if (!Number.isNaN(d.getTime())) {
+          const sStr = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+          if (sStr === todayStr) {
+            todayTotal += mins;
+          }
+        }
+      }
+    }
+
+    return { totalMinutes: total, todayMinutes: todayTotal };
+  }, [sessions, mountDate]);
 
   return (
     <main className="study-tracking-page">

@@ -608,3 +608,59 @@
     flex-direction: column;
   }
 }
+/* Muted dark cards and controls */
+.room-card,
+.create-room-form,
+.workspace-hero,
+.workspace-content,
+.workspace-summary-card {
+  background: #171c2b;
+  border-color: #292f42;
+  color: #e4e7f0;
+}
+
+.room-card-description,
+.workspace-hero p,
+.workspace-content > p,
+.workspace-summary-card small,
+.rooms-section-heading span {
+  color: #929bb0;
+}
+
+.rooms-toolbar input,
+.rooms-toolbar select,
+.create-room-form input,
+.create-room-form select,
+.create-room-form textarea,
+.workspace-form input,
+.workspace-form select,
+.workspace-form textarea,
+.workspace-reply-form input {
+  background: #111624;
+  border-color: #30364b;
+  color: #e4e7f0;
+}
+
+.room-subject {
+  background: #292641;
+  color: #c0b8f2;
+}
+
+.create-room-button,
+.room-action-button {
+  background: #625b98;
+}
+
+.create-room-button:hover,
+.room-action-button:hover:not(:disabled) {
+  background: #7770b5;
+}
+
+.leave-room-button:hover {
+  background: #292641;
+}
+
+.workspace-focus-card {
+  background: #111624;
+  border-color: #292f42;
+}
