@@ -1,0 +1,57 @@
+StudySync
+
+About the Project
+
+StudySync is a collaborative study management application designed to help students organize study sessions, manage tasks, track progress, and share learning resources.
+
+Team Members
+
+S. No.
+
+Name
+
+Role / Contribution
+
+1
+
+Your Name
+
+Frontend Development
+
+2
+
+Team Member 2
+
+Backend Development
+
+3
+
+Team Member 3
+
+Study Planner
+
+4
+
+Team Member 4
+
+Study Rooms
+
+5
+
+Team Member 5
+
+Resources / Analytics
+
+Technologies Used
+
+Frontend: React.js, Vite, CSS
+
+Backend: Node.js, Express.js
+
+Version Control: Git and GitHub
+
+Project Structure
+
+frontend/ — React frontend application
+
+backend/ — Express backend application
