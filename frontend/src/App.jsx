@@ -4,6 +4,8 @@ import AppLayout from "./components/layout/AppLayout";
 import WelcomePage from "./features/auth/pages/WelcomePage";
 import Login from "./features/auth/pages/Login";
 import Signup from "./features/auth/pages/Signup";
+import ForgotPassword from "./features/auth/pages/ForgotPassword";
+import ResetPassword from "./features/auth/pages/ResetPassword";
 import DashboardPage from "./features/dashboard/pages/DashboardPage";
 import StudyRoomsPage from "./features/study-rooms/pages/StudyRoomsPage";
 import StudyRoomWorkspace from "./features/study-rooms/pages/StudyRoomWorkspace";
@@ -40,6 +42,22 @@ function App() {
               element={
                 <PublicRoute>
                   <Signup />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <PublicRoute>
+                  <ForgotPassword />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <PublicRoute>
+                  <ResetPassword />
                 </PublicRoute>
               }
             />
