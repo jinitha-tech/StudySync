@@ -2,12 +2,12 @@ const repository = require("../repositories/planner.repository");
 
 const priorities = ["low", "medium", "high"];
 
-function listTasks() {
-  return repository.findAll();
+function listTasks(userId) {
+  return repository.findAll(userId);
 }
 
-function getTask(id) {
-  const task = repository.findById(id);
+function getTask(id, userId) {
+  const task = repository.findById(id, userId);
   if (!task) {
     const error = new Error("Task not found");
     error.statusCode = 404;
@@ -31,30 +31,26 @@ function validateTask(data, isUpdate = false) {
     }
   }
 
-  if (data.description !== undefined &&
-      typeof data.description !== "string") {
+  if (data.description !== undefined && typeof data.description !== "string") {
     const error = new Error("Description must be a string");
     error.statusCode = 400;
     throw error;
   }
 
-  if (data.priority !== undefined &&
-      !priorities.includes(data.priority)) {
+  if (data.priority !== undefined && !priorities.includes(data.priority)) {
     const error = new Error("Priority must be low, medium, or high");
     error.statusCode = 400;
     throw error;
   }
 
-  if (data.completed !== undefined &&
-      typeof data.completed !== "boolean") {
+  if (data.completed !== undefined && typeof data.completed !== "boolean") {
     const error = new Error("Completed must be true or false");
     error.statusCode = 400;
     throw error;
   }
 
   if (data.deadline !== undefined && data.deadline !== null) {
-    if (typeof data.deadline !== "string" ||
-        Number.isNaN(Date.parse(data.deadline))) {
+    if (typeof data.deadline !== "string" || Number.isNaN(Date.parse(data.deadline))) {
       const error = new Error("Deadline must be a valid date string or null");
       error.statusCode = 400;
       throw error;
@@ -62,38 +58,30 @@ function validateTask(data, isUpdate = false) {
   }
 }
 
-function createTask(data) {
+function createTask(data, userId) {
   validateTask(data);
-  return repository.create(data);
+  return repository.create({ ...data, userId });
 }
 
-function updateTask(id, data) {
+function updateTask(id, data, userId) {
   validateTask(data, true);
-  getTask(id);
-  return repository.update(id, data);
+  getTask(id, userId);
+  return repository.update(id, data, userId);
 }
 
-function deleteTask(id) {
-  getTask(id);
-  repository.remove(id);
+function deleteTask(id, userId) {
+  getTask(id, userId);
+  repository.remove(id, userId);
 }
 
-function completeTask(id, completed) {
+function completeTask(id, completed, userId) {
   if (typeof completed !== "boolean") {
     const error = new Error("Completed must be true or false");
     error.statusCode = 400;
     throw error;
   }
-
-  getTask(id);
-  return repository.update(id, { completed });
+  getTask(id, userId);
+  return repository.update(id, { completed }, userId);
 }
 
-module.exports = {
-  listTasks,
-  getTask,
-  createTask,
-  updateTask,
-  deleteTask,
-  completeTask
-};
+module.exports = { listTasks, getTask, createTask, updateTask, deleteTask, completeTask };

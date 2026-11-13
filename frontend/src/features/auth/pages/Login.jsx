@@ -78,15 +78,9 @@ export default function Login() {
           <div className="form-group">
             <div className="password-label">
               <label htmlFor="password">Password</label>
-              <button
-                type="button"
-                className="text-button"
-                onClick={() =>
-                  setMessage("Tip: Create a new account if you forgot your credentials.")
-                }
-              >
+              <Link to="/forgot-password" className="text-button">
                 Forgot password?
-              </button>
+              </Link>
             </div>
 
             <div className="password-input">

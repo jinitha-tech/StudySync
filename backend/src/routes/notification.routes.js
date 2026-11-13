@@ -1,85 +1,41 @@
 const express = require("express");
-const db = require("../db/database");
+const db       = require("../db/database");
 const { optionalAuth } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
-// GET /api/notifications
+// ─── GET /api/notifications ────────────────────────────────────────────────────
 router.get("/", optionalAuth, (req, res) => {
   try {
     let rows;
     if (req.user) {
-      const stmt = db.prepare(
+      rows = db.prepare(
         "SELECT * FROM notifications WHERE user_id = ? OR user_id IS NULL ORDER BY created_at DESC"
-      );
-      rows = stmt.all(req.user.id);
+      ).all(req.user.id);
     } else {
-      const stmt = db.prepare(
+      rows = db.prepare(
         "SELECT * FROM notifications ORDER BY created_at DESC LIMIT 50"
-      );
-      rows = stmt.all();
+      ).all();
     }
 
-    // Map `read` integer (0 or 1) to boolean
-    const notifications = rows.map((row) => ({
-      id: row.id,
-      userId: row.user_id,
-      title: row.title,
-      message: row.message,
-      type: row.type || "general",
-      read: Boolean(row.read),
-      link: row.link || null,
-      createdAt: row.created_at,
-    }));
+    const notifications = rows.map(rowToNotif);
 
-    // If notifications are completely empty, create initial fallback notifications
+    // Fallback seed if completely empty
     if (notifications.length === 0) {
-      const now = new Date();
+      const now    = new Date();
+      const userId = req.user?.id || null;
       const initial = [
-        {
-          id: "welcome_init",
-          userId: req.user?.id || null,
-          title: "Welcome to StudySync!",
-          message: "Your study workspace is ready. Keep your tasks and study sessions organized.",
-          type: "general",
-          read: false,
-          createdAt: new Date(now.getTime() - 5 * 60 * 1000).toISOString(),
-        },
-        {
-          id: "planner_init",
-          userId: req.user?.id || null,
-          title: "Review your study plan",
-          message: "Take a moment to review your upcoming study tasks and deadlines.",
-          type: "reminder",
-          read: false,
-          createdAt: new Date(now.getTime() - 60 * 60 * 1000).toISOString(),
-        },
-        {
-          id: "progress_init",
-          userId: req.user?.id || null,
-          title: "Keep up your progress",
-          message: "Visit Study Tracking to review your study activity and progress.",
-          type: "achievement",
-          read: true,
-          createdAt: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(),
-        },
+        { id: "welcome_init",  userId, title: "Welcome to StudySync!",       message: "Your study workspace is ready.",                               type: "general",     read: false, link: null, createdAt: new Date(now - 5*60*1000).toISOString() },
+        { id: "planner_init",  userId, title: "Review your study plan",      message: "Take a moment to review your upcoming study tasks.",            type: "reminder",    read: false, link: null, createdAt: new Date(now - 60*60*1000).toISOString() },
+        { id: "progress_init", userId, title: "Keep up your progress",       message: "Visit Study Tracking to review your study activity.",           type: "achievement", read: true,  link: null, createdAt: new Date(now - 24*60*60*1000).toISOString() },
       ];
 
       const insertStmt = db.prepare(
-        "INSERT INTO notifications (id, user_id, title, message, type, read, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        "INSERT INTO notifications (id,user_id,title,message,type,read,created_at) VALUES (?,?,?,?,?,?,?)"
       );
       for (const item of initial) {
-        insertStmt.run(
-          item.id,
-          item.userId,
-          item.title,
-          item.message,
-          item.type,
-          item.read ? 1 : 0,
-          item.createdAt
-        );
+        insertStmt.run(item.id, item.userId, item.title, item.message, item.type, item.read ? 1 : 0, item.createdAt);
       }
-
       return res.json({ success: true, data: initial });
     }
 
@@ -90,7 +46,7 @@ router.get("/", optionalAuth, (req, res) => {
   }
 });
 
-// POST /api/notifications
+// ─── POST /api/notifications ───────────────────────────────────────────────────
 router.post("/", optionalAuth, (req, res) => {
   try {
     const { title, message, type = "general", link = null } = req.body;
@@ -99,27 +55,17 @@ router.post("/", optionalAuth, (req, res) => {
       return res.status(400).json({ message: "Title and message are required" });
     }
 
-    const id = `notif_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const id        = `notif_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     const createdAt = new Date().toISOString();
-    const userId = req.user?.id || req.body.userId || null;
+    const userId    = req.user?.id || req.body.userId || null;
 
-    const stmt = db.prepare(
-      "INSERT INTO notifications (id, user_id, title, message, type, read, link, created_at) VALUES (?, ?, ?, ?, ?, 0, ?, ?)"
-    );
-    stmt.run(id, userId, title.trim(), message.trim(), type, link, createdAt);
+    db.prepare(
+      "INSERT INTO notifications (id,user_id,title,message,type,read,link,created_at) VALUES (?,?,?,?,?,0,?,?)"
+    ).run(id, userId, title.trim(), message.trim(), type, link, createdAt);
 
     return res.status(201).json({
       success: true,
-      data: {
-        id,
-        userId,
-        title: title.trim(),
-        message: message.trim(),
-        type,
-        read: false,
-        link,
-        createdAt,
-      },
+      data: { id, userId, title: title.trim(), message: message.trim(), type, read: false, link, createdAt },
     });
   } catch (error) {
     console.error("Create notification error:", error);
@@ -127,33 +73,14 @@ router.post("/", optionalAuth, (req, res) => {
   }
 });
 
-// PATCH /api/notifications/:id/read
-router.patch("/:id/read", optionalAuth, (req, res) => {
-  try {
-    const { id } = req.params;
-    const stmt = db.prepare("UPDATE notifications SET read = 1 WHERE id = ?");
-    stmt.run(id);
-
-    return res.json({ success: true, message: "Marked as read" });
-  } catch (error) {
-    console.error("Mark notification read error:", error);
-    return res.status(500).json({ message: "Failed to update notification" });
-  }
-});
-
-// PATCH /api/notifications/read-all
+// ─── PATCH /api/notifications/read-all  ← MUST come before /:id ───────────────
 router.patch("/read-all", optionalAuth, (req, res) => {
   try {
     if (req.user) {
-      const stmt = db.prepare(
-        "UPDATE notifications SET read = 1 WHERE user_id = ? OR user_id IS NULL"
-      );
-      stmt.run(req.user.id);
+      db.prepare("UPDATE notifications SET read = 1 WHERE user_id = ? OR user_id IS NULL").run(req.user.id);
     } else {
-      const stmt = db.prepare("UPDATE notifications SET read = 1");
-      stmt.run();
+      db.prepare("UPDATE notifications SET read = 1").run();
     }
-
     return res.json({ success: true, message: "All notifications marked as read" });
   } catch (error) {
     console.error("Mark all read error:", error);
@@ -161,13 +88,36 @@ router.patch("/read-all", optionalAuth, (req, res) => {
   }
 });
 
-// DELETE /api/notifications/:id
+// ─── PATCH /api/notifications/:id/read ────────────────────────────────────────
+router.patch("/:id/read", optionalAuth, (req, res) => {
+  try {
+    db.prepare("UPDATE notifications SET read = 1 WHERE id = ?").run(req.params.id);
+    return res.json({ success: true, message: "Marked as read" });
+  } catch (error) {
+    console.error("Mark notification read error:", error);
+    return res.status(500).json({ message: "Failed to update notification" });
+  }
+});
+
+// ─── DELETE /api/notifications  ← MUST come before /:id ──────────────────────
+router.delete("/", optionalAuth, (req, res) => {
+  try {
+    if (req.user) {
+      db.prepare("DELETE FROM notifications WHERE user_id = ? OR user_id IS NULL").run(req.user.id);
+    } else {
+      db.prepare("DELETE FROM notifications").run();
+    }
+    return res.status(204).end();
+  } catch (error) {
+    console.error("Clear notifications error:", error);
+    return res.status(500).json({ message: "Failed to clear notifications" });
+  }
+});
+
+// ─── DELETE /api/notifications/:id ────────────────────────────────────────────
 router.delete("/:id", optionalAuth, (req, res) => {
   try {
-    const { id } = req.params;
-    const stmt = db.prepare("DELETE FROM notifications WHERE id = ?");
-    stmt.run(id);
-
+    db.prepare("DELETE FROM notifications WHERE id = ?").run(req.params.id);
     return res.status(204).end();
   } catch (error) {
     console.error("Delete notification error:", error);
@@ -175,24 +125,18 @@ router.delete("/:id", optionalAuth, (req, res) => {
   }
 });
 
-// DELETE /api/notifications
-router.delete("/", optionalAuth, (req, res) => {
-  try {
-    if (req.user) {
-      const stmt = db.prepare(
-        "DELETE FROM notifications WHERE user_id = ? OR user_id IS NULL"
-      );
-      stmt.run(req.user.id);
-    } else {
-      const stmt = db.prepare("DELETE FROM notifications");
-      stmt.run();
-    }
-
-    return res.status(204).end();
-  } catch (error) {
-    console.error("Clear notifications error:", error);
-    return res.status(500).json({ message: "Failed to clear notifications" });
-  }
-});
+// ── helper ───────────────────────────────────────────────────────────────────
+function rowToNotif(row) {
+  return {
+    id:        row.id,
+    userId:    row.user_id,
+    title:     row.title,
+    message:   row.message,
+    type:      row.type || "general",
+    read:      Boolean(row.read),
+    link:      row.link || null,
+    createdAt: row.created_at,
+  };
+}
 
 module.exports = router;
