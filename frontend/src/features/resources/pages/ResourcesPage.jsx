@@ -1,6 +1,6 @@
 
 import { useEffect, useMemo, useState } from "react";
-import { UPLOADS_API_URL } from "../../../config/api";
+import { API_BASE_URL, UPLOADS_API_URL } from "../../../config/api";
 import { useNotifications } from "../../../context/useNotifications";
 import "./resources.css";
 
@@ -232,7 +232,9 @@ function ResourcesPage() {
         });
         if (res.ok) {
           const data = await res.json();
-          fileUrl = data.url;
+          fileUrl = data.url
+            ? (data.url.startsWith("http") ? data.url : `${API_BASE_URL}${data.url}`)
+            : "";
         }
       } catch (uploadError) {
         console.warn("Upload fallback error:", uploadError);
