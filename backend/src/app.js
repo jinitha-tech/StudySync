@@ -16,7 +16,8 @@ const configuredOrigins = rawCorsOrigin
   .map((o) => o.trim().replace(/\/+$/, ""))
   .filter(Boolean);
 
-const defaultLocalOrigins = [
+const defaultOrigins = [
+  "https://study-sync-tau-nine.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:4173",
@@ -25,7 +26,8 @@ const defaultLocalOrigins = [
   "http://127.0.0.1:5174",
 ];
 
-const allowedOrigins = Array.from(new Set([...configuredOrigins, ...defaultLocalOrigins]));
+// Combine configured origins with default origins
+const allowedOrigins = Array.from(new Set([...configuredOrigins, ...defaultOrigins]));
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -54,7 +56,7 @@ const corsOptions = {
       // Invalid URL format
     }
 
-    // Not allowed
+    // Reject without throwing unhandled 500
     return callback(null, false);
   },
   credentials: true,
