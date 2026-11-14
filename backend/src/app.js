@@ -15,7 +15,8 @@ const configuredOrigins = rawCorsOrigin
   .map((o) => o.trim().replace(/\/+$/, ""))
   .filter(Boolean);
 
-const defaultLocalOrigins = [
+const defaultOrigins = [
+  "https://study-sync-tau-nine.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:4173",
@@ -24,8 +25,8 @@ const defaultLocalOrigins = [
   "http://127.0.0.1:5174",
 ];
 
-// Combine configured origins with local development origins
-const allowedOrigins = Array.from(new Set([...configuredOrigins, ...defaultLocalOrigins]));
+// Combine configured origins with default origins
+const allowedOrigins = Array.from(new Set([...configuredOrigins, ...defaultOrigins]));
 
 app.use(
   cors({
@@ -40,11 +41,10 @@ app.use(
         return callback(null, true);
       }
 
-      // Support Vercel preview branch deployments if configured origin is on vercel.app
+      // Allow any Vercel deployment of the app (production and preview branches)
       try {
         const hostname = new URL(origin).hostname;
-        const hasVercelConfigured = configuredOrigins.some((o) => o.includes("vercel.app"));
-        if (hasVercelConfigured && (hostname.endsWith(".vercel.app") || hostname === "vercel.app")) {
+        if (hostname.endsWith(".vercel.app") || hostname === "vercel.app") {
           return callback(null, true);
         }
       } catch {
