@@ -318,3 +318,64 @@
   color: #86efac;
   background: #14532d44;
 }
+
+/* Search and sorting controls */
+.planner-search-sort {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.planner-search,
+.planner-sort {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.planner-search span,
+.planner-sort span {
+  color: var(--color-muted, #9ca3af);
+  font-size: 13px;
+}
+
+.planner-search input,
+.planner-sort select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--color-border, #293047);
+  border-radius: 9px;
+  background: var(--color-bg, #0b1020);
+  color: var(--color-text, #f3f4f6);
+  font: inherit;
+}
+
+.planner-search input:focus,
+.planner-sort select:focus {
+  outline: 2px solid var(--color-accent, #8b5cf6);
+  outline-offset: 2px;
+}
+
+.planner-search input::placeholder {
+  color: var(--color-muted, #9ca3af);
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .planner-search-sort {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-task {
+    flex-wrap: wrap;
+  }
+
+  .planner-edit-button,
+  .planner-delete-button {
+    padding: 8px 10px;
+  }
+}

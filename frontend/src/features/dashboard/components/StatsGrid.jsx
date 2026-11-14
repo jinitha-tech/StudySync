@@ -1,32 +1,113 @@
+import { useEffect, useState } from 'react'
+import { PLANNER_API_URL, getAuthHeaders } from "../../../config/api";
 
-const stats = [
-  {
-    label: 'Study hours',
-    value: '12.5 hrs',
-    detail: 'This week',
-    icon: '◷',
-  },
-  {
-    label: 'Sessions completed',
-    value: '8',
-    detail: 'This week',
-    icon: '✓',
-  },
-  {
-    label: 'Study streak',
-    value: '5 days',
-    detail: 'Keep it going!',
-    icon: '↗',
-  },
-  {
-    label: 'Goals completed',
-    value: '3 of 5',
-    detail: 'Weekly goals',
-    icon: '◎',
-  },
-]
+const SESSIONS_KEY = 'studysync-study-tracking';
+const LEGACY_SESSIONS_KEY = 'studysync-study-sessions';
+
+function getStartOfWeek() {
+  const d = new Date();
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(d.setDate(diff));
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
 
 function StatsGrid() {
+  const [tasks, setTasks] = useState([])
+  const [studyHoursThisWeek, setStudyHoursThisWeek] = useState(0)
+
+  useEffect(() => {
+    async function loadTasks() {
+      try {
+        const response = await fetch(PLANNER_API_URL, {
+          headers: getAuthHeaders(),
+        })
+
+        if (!response.ok) {
+          throw new Error('Could not load planner tasks')
+        }
+
+        const result = await response.json()
+        const apiTasks = Array.isArray(result.data) ? result.data : []
+
+        setTasks(apiTasks)
+      } catch (error) {
+        console.error('Could not load study planner tasks:', error)
+        setTasks([])
+      }
+    }
+
+    function loadStudyHours() {
+      try {
+        const saved = localStorage.getItem(SESSIONS_KEY) || localStorage.getItem(LEGACY_SESSIONS_KEY);
+        const sessions = saved ? JSON.parse(saved) : [];
+        if (Array.isArray(sessions)) {
+          const startOfWeek = getStartOfWeek();
+          const totalMinutes = sessions.reduce((sum, s) => {
+            const sessionDate = new Date(s.date);
+            if (!Number.isNaN(sessionDate.getTime()) && sessionDate >= startOfWeek) {
+              const mins = s.minutes !== undefined ? Number(s.minutes) : (Number(s.hours || 0) * 60);
+              return sum + (Number.isFinite(mins) ? mins : 0);
+            }
+            return sum;
+          }, 0);
+          setStudyHoursThisWeek(totalMinutes / 60);
+        }
+      } catch {
+        setStudyHoursThisWeek(0);
+      }
+    }
+
+    loadTasks()
+    loadStudyHours()
+
+    window.addEventListener('focus', loadTasks)
+    window.addEventListener('focus', loadStudyHours)
+    window.addEventListener('storage', loadStudyHours)
+
+    return () => {
+      window.removeEventListener('focus', loadTasks)
+      window.removeEventListener('focus', loadStudyHours)
+      window.removeEventListener('storage', loadStudyHours)
+    }
+  }, [])
+
+  const completedTasks = tasks.filter((task) => task.completed).length
+  const pendingTasks = tasks.length - completedTasks
+
+  const completionRate =
+    tasks.length > 0
+      ? Math.round((completedTasks / tasks.length) * 100)
+      : 0
+
+  const stats = [
+    {
+      label: 'Study hours',
+      value: `${studyHoursThisWeek.toFixed(1)} hrs`,
+      detail: 'This week',
+      icon: '◷',
+    },
+    {
+      label: 'Tasks completed',
+      value: completedTasks.toString(),
+      detail: 'All-time completed tasks',
+      icon: '✓',
+    },
+    {
+      label: 'Tasks remaining',
+      value: pendingTasks.toString(),
+      detail: 'Still to do',
+      icon: '↗',
+    },
+    {
+      label: 'Completion rate',
+      value: `${completionRate}%`,
+      detail: `${completedTasks} of ${tasks.length} tasks`,
+      icon: '◎',
+    },
+  ]
+
   return (
     <section className="stats-grid" aria-label="Study statistics">
       {stats.map((stat) => (
