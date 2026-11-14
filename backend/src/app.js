@@ -7,17 +7,32 @@ const uploadRoutes = require("./routes/uploadRoutes");
 
 const app = express();
 
-// CORS – allow frontend origin (default localhost:5173 for Vite)
-const allowedOrigins = (process.env.CORS_ORIGINS || "http://localhost:5173,http://localhost:5174,http://localhost:4173")
+// CORS – configured origins (CORS_ORIGIN / CORS_ORIGINS) with local development fallback
+const defaultLocalOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:4173",
+  "http://localhost:3000",
+];
+
+const envOriginString = process.env.CORS_ORIGIN || process.env.CORS_ORIGINS || "";
+const configuredOrigins = envOriginString
   .split(",")
-  .map((o) => o.trim());
+  .map((o) => o.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
+
+const allowedOrigins = Array.from(new Set([...defaultLocalOrigins, ...configuredOrigins]));
 
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (e.g. curl, mobile apps, same-origin)
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error(`CORS: origin '${origin}' is not allowed`));
+      if (!origin) return callback(null, true);
+      const normalizedOrigin = origin.replace(/\/+$/, "");
+      if (allowedOrigins.includes(normalizedOrigin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS: origin '${origin}' is not allowed`));
     },
     credentials: true,
   })
