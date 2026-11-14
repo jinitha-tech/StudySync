@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../dashboard.css'
-import { PLANNER_API_URL } from "../../../config/api";
+import { PLANNER_API_URL, getAuthHeaders } from "../../../config/api";
 function getDayLabels() {
   const today = new Date()
   const startOfWeek = new Date(today)
@@ -30,7 +30,9 @@ function WeeklyActivity() {
 
     async function loadTasks() {
       try {
-        const response = await fetch(PLANNER_API_URL)
+        const response = await fetch(PLANNER_API_URL, {
+          headers: getAuthHeaders(),
+        })
 
         if (!response.ok) {
           throw new Error('Could not load planner tasks')
