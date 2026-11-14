@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PLANNER_API_URL } from "../../../config/api";
+import { PLANNER_API_URL, getAuthHeaders } from "../../../config/api";
 
 const SESSIONS_KEY = 'studysync-study-tracking';
 const LEGACY_SESSIONS_KEY = 'studysync-study-sessions';
@@ -20,7 +20,9 @@ function StatsGrid() {
   useEffect(() => {
     async function loadTasks() {
       try {
-        const response = await fetch(PLANNER_API_URL)
+        const response = await fetch(PLANNER_API_URL, {
+          headers: getAuthHeaders(),
+        })
 
         if (!response.ok) {
           throw new Error('Could not load planner tasks')
