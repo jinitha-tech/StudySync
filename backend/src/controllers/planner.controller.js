@@ -1,36 +1,59 @@
-const service      = require("../services/planner.service");
-const { requireAuth } = require("../middlewares/auth.middleware");
+const service = require("../services/planner.service");
 
-function listTasks(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.listTasks(userId) });
+async function listTasks(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    res.json({ success: true, data: await service.listTasks(userId) });
+  } catch (err) {
+    next(err);
+  }
 }
 
-function getTask(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.getTask(req.params.id, userId) });
+async function getTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    res.json({ success: true, data: await service.getTask(req.params.id, userId) });
+  } catch (err) {
+    next(err);
+  }
 }
 
-function createTask(req, res) {
-  const userId = req.user?.id || null;
-  const task = service.createTask(req.body, userId);
-  res.status(201).json({ success: true, data: task });
+async function createTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    const task = await service.createTask(req.body, userId);
+    res.status(201).json({ success: true, data: task });
+  } catch (err) {
+    next(err);
+  }
 }
 
-function updateTask(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.updateTask(req.params.id, req.body, userId) });
+async function updateTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    res.json({ success: true, data: await service.updateTask(req.params.id, req.body, userId) });
+  } catch (err) {
+    next(err);
+  }
 }
 
-function deleteTask(req, res) {
-  const userId = req.user?.id || null;
-  service.deleteTask(req.params.id, userId);
-  res.status(204).end();
+async function deleteTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    await service.deleteTask(req.params.id, userId);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
 }
 
-function completeTask(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.completeTask(req.params.id, req.body.completed, userId) });
+async function completeTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    res.json({ success: true, data: await service.completeTask(req.params.id, req.body.completed, userId) });
+  } catch (err) {
+    next(err);
+  }
 }
 
 module.exports = { listTasks, getTask, createTask, updateTask, deleteTask, completeTask };

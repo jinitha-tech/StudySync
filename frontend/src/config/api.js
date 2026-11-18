@@ -1,6 +1,12 @@
-export const API_BASE_URL = (
-  import.meta.env.VITE_API_URL || "http://localhost:5050"
-).replace(/\/+$/, "");
+const rawApiUrl = (import.meta.env.VITE_API_URL || "").trim();
+
+// Fall back to live Render backend if unset or if the placeholder is present
+const resolvedApiUrl =
+  !rawApiUrl || rawApiUrl.includes("your-backend.onrender.com")
+    ? (import.meta.env.DEV ? "http://localhost:5050" : "https://studysync-aw5h.onrender.com")
+    : rawApiUrl;
+
+export const API_BASE_URL = resolvedApiUrl.replace(/\/+$/, "");
 
 export const AUTH_API_URL = `${API_BASE_URL}/api/auth`;
 export const PLANNER_API_URL = `${API_BASE_URL}/api/planner`;
