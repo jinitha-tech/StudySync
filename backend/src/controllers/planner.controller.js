@@ -1,36 +1,63 @@
-const service      = require("../services/planner.service");
-const { requireAuth } = require("../middlewares/auth.middleware");
+const service = require("../services/planner.service");
 
-function listTasks(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.listTasks(userId) });
+async function listTasks(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    const tasks = await service.listTasks(userId);
+    res.json({ success: true, data: tasks });
+  } catch (error) {
+    next(error);
+  }
 }
 
-function getTask(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.getTask(req.params.id, userId) });
+async function getTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    const task = await service.getTask(req.params.id, userId);
+    res.json({ success: true, data: task });
+  } catch (error) {
+    next(error);
+  }
 }
 
-function createTask(req, res) {
-  const userId = req.user?.id || null;
-  const task = service.createTask(req.body, userId);
-  res.status(201).json({ success: true, data: task });
+async function createTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    const task = await service.createTask(req.body, userId);
+    res.status(201).json({ success: true, data: task });
+  } catch (error) {
+    next(error);
+  }
 }
 
-function updateTask(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.updateTask(req.params.id, req.body, userId) });
+async function updateTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    const task = await service.updateTask(req.params.id, req.body, userId);
+    res.json({ success: true, data: task });
+  } catch (error) {
+    next(error);
+  }
 }
 
-function deleteTask(req, res) {
-  const userId = req.user?.id || null;
-  service.deleteTask(req.params.id, userId);
-  res.status(204).end();
+async function deleteTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    await service.deleteTask(req.params.id, userId);
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
 }
 
-function completeTask(req, res) {
-  const userId = req.user?.id || null;
-  res.json({ success: true, data: service.completeTask(req.params.id, req.body.completed, userId) });
+async function completeTask(req, res, next) {
+  try {
+    const userId = req.user?.id || null;
+    const task = await service.completeTask(req.params.id, req.body.completed, userId);
+    res.json({ success: true, data: task });
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = { listTasks, getTask, createTask, updateTask, deleteTask, completeTask };

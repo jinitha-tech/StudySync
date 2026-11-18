@@ -1,20 +1,29 @@
-const express  = require("express");
-const bcrypt   = require("bcryptjs");
-const crypto   = require("node:crypto");
-const db       = require("../db/database");
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const crypto = require("node:crypto");
+const prisma = require("../db/prisma");
 const { generateToken } = require("../utils/token");
-const { requireAuth }   = require("../middlewares/auth.middleware");
+const { requireAuth } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
+// ─── Utility: safe ISO date formatting ─────────────────────────────────────────
+function formatIsoDate(dateVal) {
+  if (!dateVal) return new Date().toISOString();
+  if (dateVal instanceof Date) {
+    return isNaN(dateVal.getTime()) ? new Date().toISOString() : dateVal.toISOString();
+  }
+  const parsed = new Date(dateVal);
+  return isNaN(parsed.getTime()) ? new Date().toISOString() : parsed.toISOString();
+}
+
 // ─── Utility: send password-reset email ───────────────────────────────────────
 async function sendResetEmail(to, resetToken) {
-  // If SMTP env vars are set, use nodemailer
   if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
     const nodemailer = require("nodemailer");
     const transporter = nodemailer.createTransport({
-      host:   process.env.SMTP_HOST,
-      port:   parseInt(process.env.SMTP_PORT || "587", 10),
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || "587", 10),
       secure: false,
       auth: {
         user: process.env.SMTP_USER,
@@ -25,7 +34,7 @@ async function sendResetEmail(to, resetToken) {
     const resetLink = `${process.env.FRONTEND_URL || "http://localhost:5173"}/reset-password?token=${resetToken}`;
 
     await transporter.sendMail({
-      from:    process.env.EMAIL_FROM || `StudySync <no-reply@studysync.io>`,
+      from: process.env.EMAIL_FROM || `StudySync <no-reply@studysync.io>`,
       to,
       subject: "StudySync – Reset your password",
       html: `
@@ -40,7 +49,7 @@ async function sendResetEmail(to, resetToken) {
     return { sent: true };
   }
 
-  // No SMTP configured – return the token so the caller can surface it in dev
+  // No SMTP configured – return token so caller can surface it in dev
   return { sent: false, devToken: resetToken };
 }
 
@@ -58,36 +67,63 @@ router.post("/signup", async (req, res) => {
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    const checkStmt = db.prepare("SELECT id FROM users WHERE email = ?");
-    const existing  = checkStmt.get(normalizedEmail);
+    const existing = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
     if (existing) {
       return res.status(409).json({ message: "An account with this email already exists" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
     const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    const now    = new Date().toISOString();
 
-    db.prepare(
-      "INSERT INTO users (id,name,email,password_hash,created_at,updated_at) VALUES (?,?,?,?,?,?)"
-    ).run(userId, name.trim(), normalizedEmail, passwordHash, now, now);
+    const user = await prisma.user.create({
+      data: {
+        id: userId,
+        name: name.trim(),
+        email: normalizedEmail,
+        passwordHash,
+      },
+    });
 
-    const insertNotif = db.prepare(
-      "INSERT INTO notifications (id,user_id,title,message,type,read,link,created_at) VALUES (?,?,?,?,?,?,?,?)"
-    );
-    insertNotif.run(`notif_${Date.now()}_1`, userId, "Welcome to StudySync! 🎉",
-      `Hi ${name.trim()}! Your study workspace is ready. Plan tasks, track focus sessions, and join study rooms.`,
-      "general", 0, "/dashboard", now);
-    insertNotif.run(`notif_${Date.now()}_2`, userId, "Get Started with Study Planner",
-      "Add your first subject and upcoming deadlines in the Study Planner to stay organized.",
-      "reminder", 0, "/study-planner", new Date(Date.now()+1000).toISOString());
+    try {
+      await prisma.notification.createMany({
+        data: [
+          {
+            id: `notif_${Date.now()}_1`,
+            userId,
+            title: "Welcome to StudySync! 🎉",
+            message: `Hi ${name.trim()}! Your study workspace is ready. Plan tasks, track focus sessions, and join study rooms.`,
+            type: "general",
+            read: false,
+            link: "/dashboard",
+          },
+          {
+            id: `notif_${Date.now()}_2`,
+            userId,
+            title: "Get Started with Study Planner",
+            message: "Add your first subject and upcoming deadlines in the Study Planner to stay organized.",
+            type: "reminder",
+            read: false,
+            link: "/study-planner",
+          },
+        ],
+      });
+    } catch (notifErr) {
+      console.warn("Notice: could not create initial notifications:", notifErr.message);
+    }
 
-    const token = generateToken({ id: userId, email: normalizedEmail });
+    const token = generateToken({ id: user.id, email: user.email });
 
     return res.status(201).json({
       success: true,
       message: "Signup successful! Welcome to StudySync.",
-      user: { id: userId, name: name.trim(), email: normalizedEmail, createdAt: now },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: formatIsoDate(user.createdAt),
+      },
       token,
     });
   } catch (error) {
@@ -106,11 +142,11 @@ router.post("/login", async (req, res) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
-    const user = db.prepare(
-      "SELECT id,name,email,password_hash,created_at FROM users WHERE email = ?"
-    ).get(normalizedEmail);
+    const user = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
 
-    if (!user || !(await bcrypt.compare(password, user.password_hash))) {
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
@@ -119,7 +155,12 @@ router.post("/login", async (req, res) => {
     return res.json({
       success: true,
       message: "Login successful! Welcome back.",
-      user: { id: user.id, name: user.name, email: user.email, createdAt: user.created_at },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: formatIsoDate(user.createdAt),
+      },
       token,
     });
   } catch (error) {
@@ -133,30 +174,36 @@ router.get("/me", requireAuth, (req, res) => {
   return res.json({
     success: true,
     user: {
-      id:        req.user.id,
-      name:      req.user.name,
-      email:     req.user.email,
-      createdAt: req.user.created_at,
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      createdAt: req.user.createdAt || req.user.created_at,
     },
   });
 });
 
 // ─── PUT /api/auth/profile ─────────────────────────────────────────────────────
-router.put("/profile", requireAuth, (req, res) => {
+router.put("/profile", requireAuth, async (req, res) => {
   try {
     const { name } = req.body;
     if (!name?.trim()) {
       return res.status(400).json({ message: "Name cannot be empty" });
     }
 
-    const now = new Date().toISOString();
-    db.prepare("UPDATE users SET name = ?, updated_at = ? WHERE id = ?")
-      .run(name.trim(), now, req.user.id);
+    const updated = await prisma.user.update({
+      where: { id: req.user.id },
+      data: { name: name.trim() },
+    });
 
     return res.json({
       success: true,
       message: "Profile updated successfully",
-      user: { id: req.user.id, name: name.trim(), email: req.user.email, createdAt: req.user.created_at },
+      user: {
+        id: updated.id,
+        name: updated.name,
+        email: updated.email,
+        createdAt: formatIsoDate(updated.createdAt),
+      },
     });
   } catch (error) {
     console.error("Profile update error:", error);
@@ -176,20 +223,23 @@ router.put("/change-password", requireAuth, async (req, res) => {
       return res.status(400).json({ message: "New password must be at least 8 characters long" });
     }
 
-    const user = db.prepare("SELECT password_hash FROM users WHERE id = ?").get(req.user.id);
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+    });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const match = await bcrypt.compare(currentPassword, user.password_hash);
+    const match = await bcrypt.compare(currentPassword, user.passwordHash);
     if (!match) {
       return res.status(401).json({ message: "Current password is incorrect" });
     }
 
     const newHash = await bcrypt.hash(newPassword, 10);
-    const now = new Date().toISOString();
-    db.prepare("UPDATE users SET password_hash = ?, updated_at = ? WHERE id = ?")
-      .run(newHash, now, req.user.id);
+    await prisma.user.update({
+      where: { id: req.user.id },
+      data: { passwordHash: newHash },
+    });
 
     return res.json({ success: true, message: "Password changed successfully" });
   } catch (error) {
@@ -208,7 +258,9 @@ router.post("/forgot-password", async (req, res) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
-    const user = db.prepare("SELECT id, name, email FROM users WHERE email = ?").get(normalizedEmail);
+    const user = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
 
     // Always return success to avoid email enumeration
     if (!user) {
@@ -219,15 +271,20 @@ router.post("/forgot-password", async (req, res) => {
     }
 
     // Generate a secure random token (hex, 32 bytes = 64 chars)
-    const resetToken   = crypto.randomBytes(32).toString("hex");
-    const tokenExpires = new Date(Date.now() + 3600000).toISOString(); // 1 hour
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const tokenExpires = new Date(Date.now() + 3600000); // 1 hour
 
-    db.prepare("UPDATE users SET reset_token = ?, reset_token_expires = ?, updated_at = ? WHERE id = ?")
-      .run(resetToken, tokenExpires, new Date().toISOString(), user.id);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetToken,
+        resetTokenExpires: tokenExpires,
+      },
+    });
 
     const emailResult = await sendResetEmail(user.email, resetToken);
 
-    // In development (no SMTP), expose the token in the response
+    // In development (no SMTP), expose token in response
     const devInfo = emailResult.sent
       ? {}
       : {
@@ -259,10 +316,13 @@ router.post("/reset-password", async (req, res) => {
       return res.status(400).json({ message: "Password must be at least 8 characters long" });
     }
 
-    const now  = new Date().toISOString();
-    const user = db.prepare(
-      "SELECT id FROM users WHERE reset_token = ? AND reset_token_expires > ?"
-    ).get(token, now);
+    const now = new Date();
+    const user = await prisma.user.findFirst({
+      where: {
+        resetToken: token,
+        resetTokenExpires: { gt: now },
+      },
+    });
 
     if (!user) {
       return res.status(400).json({
@@ -271,9 +331,14 @@ router.post("/reset-password", async (req, res) => {
     }
 
     const newHash = await bcrypt.hash(newPassword, 10);
-    db.prepare(
-      "UPDATE users SET password_hash = ?, reset_token = NULL, reset_token_expires = NULL, updated_at = ? WHERE id = ?"
-    ).run(newHash, now, user.id);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        passwordHash: newHash,
+        resetToken: null,
+        resetTokenExpires: null,
+      },
+    });
 
     return res.json({ success: true, message: "Password reset successfully. You can now log in." });
   } catch (error) {
@@ -283,19 +348,22 @@ router.post("/reset-password", async (req, res) => {
 });
 
 // ─── GET /api/auth/verify-reset-token ─────────────────────────────────────────
-router.get("/verify-reset-token", (req, res) => {
+router.get("/verify-reset-token", async (req, res) => {
   try {
     const { token } = req.query;
     if (!token) {
       return res.status(400).json({ valid: false, message: "Token is required" });
     }
 
-    const now  = new Date().toISOString();
-    const user = db.prepare(
-      "SELECT id FROM users WHERE reset_token = ? AND reset_token_expires > ?"
-    ).get(token, now);
+    const now = new Date();
+    const user = await prisma.user.findFirst({
+      where: {
+        resetToken: String(token),
+        resetTokenExpires: { gt: now },
+      },
+    });
 
-    return res.json({ valid: !!user });
+    return res.json({ valid: Boolean(user) });
   } catch (error) {
     console.error("Verify reset token error:", error);
     return res.status(500).json({ valid: false });

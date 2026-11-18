@@ -2,12 +2,12 @@ const repository = require("../repositories/planner.repository");
 
 const priorities = ["low", "medium", "high"];
 
-function listTasks(userId) {
+async function listTasks(userId) {
   return repository.findAll(userId);
 }
 
-function getTask(id, userId) {
-  const task = repository.findById(id, userId);
+async function getTask(id, userId) {
+  const task = await repository.findById(id, userId);
   if (!task) {
     const error = new Error("Task not found");
     error.statusCode = 404;
@@ -58,29 +58,29 @@ function validateTask(data, isUpdate = false) {
   }
 }
 
-function createTask(data, userId) {
+async function createTask(data, userId) {
   validateTask(data);
   return repository.create({ ...data, userId });
 }
 
-function updateTask(id, data, userId) {
+async function updateTask(id, data, userId) {
   validateTask(data, true);
-  getTask(id, userId);
+  await getTask(id, userId);
   return repository.update(id, data, userId);
 }
 
-function deleteTask(id, userId) {
-  getTask(id, userId);
-  repository.remove(id, userId);
+async function deleteTask(id, userId) {
+  await getTask(id, userId);
+  return repository.remove(id, userId);
 }
 
-function completeTask(id, completed, userId) {
+async function completeTask(id, completed, userId) {
   if (typeof completed !== "boolean") {
     const error = new Error("Completed must be true or false");
     error.statusCode = 400;
     throw error;
   }
-  getTask(id, userId);
+  await getTask(id, userId);
   return repository.update(id, { completed }, userId);
 }
 
